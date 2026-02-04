@@ -4,6 +4,10 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+# Bootstrap CSS framework [https://getbootstrap.com/]
+gem "bootstrap", "~> 5.3"
+# Sass compiler for Sprockets [https://github.com/sass/sassc-rails]
+gem "sassc-rails"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
