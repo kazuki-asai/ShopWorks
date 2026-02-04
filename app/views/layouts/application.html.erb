@@ -14,9 +14,17 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container mt-5">
+      <h1 class="mb-4">ShopWorks</h1>
+      <button type="button" class="btn btn-primary me-2">Primary</button>
+      <button type="button" class="btn btn-success me-2">Success</button>
+      <button type="button" class="btn btn-danger me-2">Danger</button>
+      <button type="button" class="btn btn-outline-secondary">Outline</button>
+      <%= yield %>
+    </div>
   </body>
 </html>
