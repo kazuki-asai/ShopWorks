@@ -1,0 +1,38 @@
+<!-- サイドメニュー -->
+<nav class="col-md-3 col-lg-2 bg-light sidebar py-3 ps-0" style="min-height: calc(100vh - 56px);">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <h6 class="px-3 text-muted text-uppercase small">メニュー</h6>
+    </li>
+    <li class="nav-item">
+      <%= link_to root_path, class: "nav-link active" do %>
+        <i class="fa-solid fa-gauge me-2"></i>ダッシュボード
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "#", class: "nav-link" do %>
+        <i class="fa-solid fa-box me-2"></i>商品管理
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#masterMenu" role="button" aria-expanded="false" aria-controls="masterMenu">
+        <i class="fa-solid fa-gear me-2"></i>マスタ管理
+        <i class="fa-solid fa-chevron-down float-end small"></i>
+      </a>
+      <div class="collapse" id="masterMenu">
+        <ul class="nav flex-column ms-4">
+          <li class="nav-item">
+            <%= link_to "#", class: "nav-link py-1" do %>
+              <i class="fa-solid fa-users me-2"></i>ユーザー管理
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "#", class: "nav-link py-1" do %>
+              <i class="fa-solid fa-bullhorn me-2"></i>お知らせ管理
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
