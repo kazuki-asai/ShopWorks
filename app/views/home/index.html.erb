@@ -1,1 +1,47 @@
-<p>Welcome to ShopWorks!</p>
+<h2 class="mb-4">ダッシュボード</h2>
+
+<!-- サマリーカード -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card text-white bg-primary">
+      <div class="card-body">
+        <h6 class="card-title">商品数</h6>
+        <p class="card-text fs-3 fw-bold mb-0">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card text-white bg-success">
+      <div class="card-body">
+        <h6 class="card-title">本日の売上</h6>
+        <p class="card-text fs-3 fw-bold mb-0">&yen; 0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card text-white bg-info">
+      <div class="card-body">
+        <h6 class="card-title">注文数</h6>
+        <p class="card-text fs-3 fw-bold mb-0">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card text-white bg-warning">
+      <div class="card-body">
+        <h6 class="card-title">ユーザー数</h6>
+        <p class="card-text fs-3 fw-bold mb-0"><%= User.count %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 最近のアクティビティ -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">最近のアクティビティ</h5>
+  </div>
+  <div class="card-body">
+    <p class="text-muted mb-0">まだアクティビティはありません。</p>
+  </div>
+</div>
