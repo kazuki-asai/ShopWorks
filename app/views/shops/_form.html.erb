@@ -1,13 +1,5 @@
 <%= form_with(model: shop, class: "needs-validation") do |f| %>
-  <% if shop.errors.any? %>
-    <div class="alert alert-danger">
-      <ul class="mb-0">
-        <% shop.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render "layouts/message", model: shop %>
 
   <div class="mb-3">
     <%= f.label :name, "ショップ名", class: "form-label" %>
