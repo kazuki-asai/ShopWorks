@@ -1,0 +1,2 @@
+class HomeControllerPolicy < ControllerBasePolicy
+end
