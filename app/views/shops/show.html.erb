@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0"><%= @shop.name %></h1>
+  <div class="d-flex gap-2">
+    <%= link_to edit_shop_path(@shop), class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-pen-to-square me-1"></i>編集
+    <% end %>
+    <%= link_to shops_path, class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-arrow-left me-1"></i>一覧に戻る
+    <% end %>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <table class="table table-borderless mb-0">
+      <tbody>
+        <tr>
+          <th class="text-muted" style="width: 200px;">ID</th>
+          <td><%= @shop.id %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">ショップ名</th>
+          <td><%= @shop.name %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">ドメイン</th>
+          <td><%= @shop.domain %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">登録日</th>
+          <td><%= @shop.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">更新日</th>
+          <td><%= @shop.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

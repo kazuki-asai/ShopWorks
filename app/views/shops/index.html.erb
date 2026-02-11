@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">ショップ一覧</h1>
+  <%= link_to new_shop_path, class: "btn btn-primary" do %>
+    <i class="fa-solid fa-plus me-1"></i>新規登録
+  <% end %>
+</div>
+
+<div class="d-flex flex-column" style="min-height: calc(100vh - 200px);">
+  <div class="table-responsive flex-grow-1">
+    <table class="table table-hover mb-0 h-100 table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>ショップ名</th>
+          <th>ドメイン</th>
+          <th>登録日</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @shops.each do |shop| %>
+          <tr>
+            <td><%= shop.id %></td>
+            <td><%= link_to shop.name, shop_path(shop) %></td>
+            <td><%= shop.domain %></td>
+            <td><%= l(shop.created_at, format: :short) rescue shop.created_at.strftime("%Y/%m/%d") %></td>
+            <td>
+              <%= link_to edit_shop_path(shop), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to shop_path(shop), data: { turbo_method: :delete, turbo_confirm: "「#{shop.name}」を削除しますか？" }, class: "btn btn-sm btn-outline-danger" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
