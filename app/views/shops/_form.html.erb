@@ -1,0 +1,26 @@
+<%= form_with(model: shop, class: "needs-validation") do |f| %>
+  <% if shop.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% shop.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, "ショップ名", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :domain, "ドメイン", class: "form-label" %>
+    <%= f.text_field :domain, class: "form-control" %>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit '保存', class: "btn btn-primary" %>
+    <%= link_to "キャンセル", shops_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
