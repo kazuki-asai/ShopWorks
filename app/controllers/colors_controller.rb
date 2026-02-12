@@ -40,11 +40,11 @@ class ColorsController < ApplicationController
   def create_defaults
     shop_id = current_user.admin? ? params[:shop_id] : current_user.shop_id
     defaults = [
-      { name: "ブラック", position: 1, hex_code: '#000000' },
-      { name: "ホワイト", position: 2, hex_code: '#FFFFFF' },
-      { name: "レッド", position: 3, hex_code: '#FF0000' },
-      { name: "ブルー", position: 4, hex_code: '#0000FF' },
-      { name: "グリーン", position: 5, hex_code: '#008000' }
+      { name: "ブラック", position: 1, hex_code: "#000000" },
+      { name: "ホワイト", position: 2, hex_code: "#FFFFFF" },
+      { name: "レッド", position: 3, hex_code: "#FF0000" },
+      { name: "ブルー", position: 4, hex_code: "#0000FF" },
+      { name: "グリーン", position: 5, hex_code: "#008000" }
     ]
     default_names = defaults.map { |d| d[:name] }
     Color.where(shop_id: shop_id, name: default_names).destroy_all
