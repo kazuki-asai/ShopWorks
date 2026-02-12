@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0"><%= @product.name %></h1>
+  <div class="d-flex gap-2">
+    <%= link_to edit_product_path(@product), class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-pen-to-square me-1"></i>編集
+    <% end %>
+    <%= link_to products_path, class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-arrow-left me-1"></i>一覧に戻る
+    <% end %>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <table class="table table-borderless mb-0">
+      <tbody>
+        <tr>
+          <th class="text-muted" style="width: 200px;">ID</th>
+          <td><%= @product.id %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">商品名</th>
+          <td><%= @product.name %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">説明</th>
+          <td><%= simple_format(@product.description) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">商品詳細</th>
+          <td><%= simple_format(@product.detail) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">価格</th>
+          <td><%= number_to_currency(@product.price, unit: "¥", precision: 0) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">サイズ</th>
+          <td>
+            <% if @product.sizes.any? %>
+              <% @product.sizes.each do |size| %>
+                <span class="badge bg-secondary me-1"><%= size.name %></span>
+              <% end %>
+            <% else %>
+              <span class="text-muted">未設定</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class="text-muted">カラー</th>
+          <td>
+            <% if @product.colors.any? %>
+              <% @product.colors.each do |color| %>
+                <span class="badge bg-info me-1"><%= color.name %></span>
+              <% end %>
+            <% else %>
+              <span class="text-muted">未設定</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class="text-muted">ショップ</th>
+          <td><%= @product.shop.name %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">登録日</th>
+          <td><%= @product.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">更新日</th>
+          <td><%= @product.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">画像</th>
+          <td>
+            <% if @product.thumbnails.any? %>
+              <div class="d-flex flex-wrap gap-2">
+                <% @product.thumbnails.each do |thumbnail| %>
+                  <% if thumbnail.image.attached? %>
+                    <%= image_tag thumbnail.image, style: "width: 150px; height: 150px; object-fit: cover;", class: "rounded border" %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+              <span class="text-muted">画像なし</span>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

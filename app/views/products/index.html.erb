@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">商品一覧</h1>
+  <%= link_to new_product_path, class: "btn btn-primary" do %>
+    <i class="fa-solid fa-plus me-1"></i>新規登録
+  <% end %>
+</div>
+
+<div class="d-flex flex-column" style="min-height: calc(100vh - 200px);">
+  <div class="table-responsive flex-grow-1">
+    <table class="table table-hover mb-0 h-100 table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>商品名</th>
+          <th>価格</th>
+          <th>ショップ</th>
+          <th>登録日</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.id %></td>
+            <td><%= link_to product.name, product_path(product) %></td>
+            <td><%= number_to_currency(product.price, unit: "¥", precision: 0) %></td>
+            <td><%= product.shop.name %></td>
+            <td><%= l(product.created_at, format: :short) rescue product.created_at.strftime("%Y/%m/%d") %></td>
+            <td>
+              <%= link_to edit_product_path(product), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to product_path(product), data: { turbo_method: :delete, turbo_confirm: "「#{product.name}」を削除しますか？" }, class: "btn btn-sm btn-outline-danger" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
