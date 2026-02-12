@@ -1,0 +1,94 @@
+<%= form_with(model: product, class: "needs-validation", multipart: true) do |f| %>
+  <%= render "layouts/message", model: product %>
+
+  <div class="mb-3">
+    <%= f.label :name, "商品名", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :description, "説明", class: "form-label" %>
+    <%= f.text_area :description, class: "form-control", rows: 4 %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :detail, "商品詳細", class: "form-label" %>
+    <%= f.text_area :detail, class: "form-control", rows: 6 %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :price, "価格", class: "form-label" %>
+    <div class="input-group">
+      <span class="input-group-text">¥</span>
+      <%= f.number_field :price, class: "form-control", min: 0, required: true %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <% if current_user.admin? %>
+      <%= f.label :shop_id, "ショップ", class: "form-label" %>
+      <%= f.collection_select :shop_id, Shop.order(:name), :id, :name, { prompt: "選択してください" }, { class: "form-select", required: true } %>
+    <% else %>
+      <%= f.hidden_field :shop_id, value: current_user.shop_id %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">サイズ</label>
+    <div class="d-flex flex-wrap gap-3">
+      <% Size.by_current_shop.each do |size| %>
+        <div class="form-check">
+          <%= check_box_tag "product[size_ids][]", size.id, product.size_ids.include?(size.id), id: "size_#{size.id}", class: "form-check-input" %>
+          <%= label_tag "size_#{size.id}", size.name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+    <% if Size.none? %>
+      <div class="form-text">サイズが未登録です。マスタ管理から登録してください。</div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">カラー</label>
+    <div class="d-flex flex-wrap gap-3">
+      <% Color.by_current_shop.each do |color| %>
+        <div class="form-check">
+          <%= check_box_tag "product[color_ids][]", color.id, product.color_ids.include?(color.id), id: "color_#{color.id}", class: "form-check-input" %>
+          <%= label_tag "color_#{color.id}", color.name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+    <% if Color.none? %>
+      <div class="form-text">カラーが未登録です。マスタ管理から登録してください。</div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= label_tag :images, "画像", class: "form-label" %>
+    <%= file_field_tag "images[]", multiple: true, accept: "image/*", class: "form-control" %>
+    <div class="form-text">複数ファイルを選択できます</div>
+  </div>
+
+  <% if product.persisted? && product.thumbnails.any? %>
+    <div class="mb-3">
+      <label class="form-label">登録済み画像</label>
+      <div class="d-flex flex-wrap gap-2">
+        <% product.thumbnails.each do |thumbnail| %>
+          <% if thumbnail.image.attached? %>
+            <div class="position-relative">
+              <%= image_tag thumbnail.image, style: "width: 120px; height: 120px; object-fit: cover;", class: "rounded border" %>
+              <%= link_to product_thumbnail_path(product, thumbnail), data: { turbo_method: :delete, turbo_confirm: "この画像を削除しますか？" }, class: "position-absolute top-0 end-0 btn btn-sm btn-danger rounded-circle", style: "transform: translate(30%, -30%);" do %>
+                <i class="fa-solid fa-xmark"></i>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="d-flex gap-2">
+    <%= f.submit '保存', class: "btn btn-primary" %>
+    <%= link_to "キャンセル", products_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

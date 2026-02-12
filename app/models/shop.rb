@@ -1,3 +1,6 @@
 class Shop < ApplicationRecord
   has_many :users, dependent: :nullify
+  has_many :products, dependent: :destroy
+  has_many :sizes, dependent: :destroy
+  has_many :colors, dependent: :destroy
 end

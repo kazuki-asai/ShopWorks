@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">サイズ一覧</h1>
+  <div class="d-flex gap-2">
+    <%= link_to new_size_path, class: "btn btn-primary" do %>
+      <i class="fa-solid fa-plus me-1"></i>新規登録
+    <% end %>
+    <%= link_to create_defaults_sizes_path, data: { turbo_method: :post, turbo_confirm: "S, M, L, XL の定番サイズを作成しますか？" }, class: "btn btn-outline-primary" do %>
+      <i class="fa-solid fa-wand-magic-sparkles me-1"></i>定番サイズの作成
+    <% end %>
+  </div>
+</div>
+
+<div class="d-flex flex-column" style="min-height: calc(100vh - 200px);">
+  <div class="table-responsive flex-grow-1">
+    <table class="table table-hover mb-0 h-100 table-striped">
+      <thead class="table-light">
+        <tr>
+          <% if current_user.admin? %>
+            <th>ID</th>
+            <th>ショップ</th>
+          <% end %>
+          <th>サイズ名</th>
+          <th>並び順</th>
+          <th>登録日</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sizes.each do |size| %>
+          <tr>
+            <% if current_user.admin? %>
+              <td><%= size.id %></td>
+              <td><%= size.shop.name %></td>
+            <% end %>
+            <td><%= size.name %></td>
+            <td><%= size.position %></td>
+            <td><%= l(size.created_at, format: :short) rescue size.created_at.strftime("%Y/%m/%d") %></td>
+            <td>
+              <%= link_to edit_size_path(size), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to size_path(size), data: { turbo_method: :delete, turbo_confirm: "「#{size.name}」を削除しますか？" }, class: "btn btn-sm btn-outline-danger" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

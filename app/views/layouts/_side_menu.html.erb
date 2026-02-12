@@ -15,7 +15,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to "#", class: "nav-link" do %>
+      <%= link_to products_path, class: "nav-link" do %>
         <i class="fa-solid fa-box me-2"></i>商品管理
       <% end %>
     </li>
@@ -29,6 +29,16 @@
           <li class="nav-item">
             <%= link_to users_path, class: "nav-link py-1" do %>
               <i class="fa-solid fa-users me-2"></i>ユーザー管理
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to sizes_path, class: "nav-link py-1" do %>
+              <i class="fa-solid fa-ruler me-2"></i>サイズ管理
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to colors_path, class: "nav-link py-1" do %>
+              <i class="fa-solid fa-palette me-2"></i>カラー管理
             <% end %>
           </li>
           <li class="nav-item">
