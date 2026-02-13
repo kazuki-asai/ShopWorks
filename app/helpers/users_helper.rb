@@ -18,4 +18,8 @@ module UsersHelper
   def role_labels(role)
     ROLES[role]
   end
+
+  def admin?
+    current_user.admin?
+  end
 end

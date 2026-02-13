@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_12_023545) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_051132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_023545) do
     t.bigint "shop_id"
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_colors_on_shop_id"
+  end
+
+  create_table "process_steps", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.integer "position"
+    t.bigint "shop_id"
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_process_steps_on_shop_id"
   end
 
   create_table "product_colors", force: :cascade do |t|
@@ -124,6 +133,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_023545) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "colors", "shops"
+  add_foreign_key "process_steps", "shops"
   add_foreign_key "product_colors", "colors"
   add_foreign_key "product_colors", "products"
   add_foreign_key "product_sizes", "products"

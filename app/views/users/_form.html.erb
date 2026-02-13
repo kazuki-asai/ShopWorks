@@ -6,7 +6,7 @@
     <%= f.select :role, roles_pulldown, {}, class: "form-select" %>
   </div>
 
-  <% if current_user.admin? %>
+  <% if admin? %>
     <div class="mb-3">
       <%= f.label :shop_id, "ショップ", class: "form-label" %>
       <%= f.collection_select :shop_id, Shop.all, :id, :name, { include_blank: "未所属" }, class: "form-select" %>

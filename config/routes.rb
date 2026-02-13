@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       post :create_defaults
     end
   end
+  resources :process_steps do
+    collection do
+      post :create_defaults
+    end
+  end
 
   # Defines the root path route ("/")
   root "home#index"

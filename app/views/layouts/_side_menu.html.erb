@@ -9,11 +9,13 @@
         <i class="fa-solid fa-gauge me-2"></i>ダッシュボード
       <% end %>
     </li>
-    <li class="nav-item">
-      <%= link_to shops_path, class: "nav-link" do %>
-        <i class="fa-solid fa-store me-2"></i>ショップ管理
-      <% end %>
-    </li>
+    <% if policy(:shops_controller).index? %>
+      <li class="nav-item">
+        <%= link_to shops_path, class: "nav-link" do %>
+          <i class="fa-solid fa-store me-2"></i>ショップ管理
+        <% end %>
+      </li>
+    <% end %>
     <li class="nav-item">
       <%= link_to products_path, class: "nav-link" do %>
         <i class="fa-solid fa-box me-2"></i>商品管理
@@ -39,6 +41,11 @@
           <li class="nav-item">
             <%= link_to colors_path, class: "nav-link py-1" do %>
               <i class="fa-solid fa-palette me-2"></i>カラー管理
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to process_steps_path, class: "nav-link py-1" do %>
+              <i class="fa-solid fa-list-check me-2"></i>工程管理
             <% end %>
           </li>
           <li class="nav-item">

@@ -13,7 +13,9 @@
           <th>ID</th>
           <th>商品名</th>
           <th>価格</th>
-          <th>ショップ</th>
+          <% if admin? %>
+            <th>ショップ</th>
+          <% end %>
           <th>登録日</th>
           <th>操作</th>
         </tr>
@@ -24,7 +26,9 @@
             <td><%= product.id %></td>
             <td><%= link_to product.name, product_path(product) %></td>
             <td><%= number_to_currency(product.price, unit: "¥", precision: 0) %></td>
-            <td><%= product.shop.name %></td>
+            <% if admin? %>
+              <td><%= product.shop.name %></td>
+            <% end %>
             <td><%= l(product.created_at, format: :short) rescue product.created_at.strftime("%Y/%m/%d") %></td>
             <td>
               <%= link_to edit_product_path(product), class: "btn btn-sm btn-outline-secondary me-1" do %>
