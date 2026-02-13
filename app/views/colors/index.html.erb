@@ -15,7 +15,7 @@
     <table class="table table-hover mb-0 h-100 table-striped">
       <thead class="table-light">
         <tr>
-          <% if current_user.admin? %>
+          <% if admin? %>
             <th>ID</th>
             <th>ショップ</th>
           <% end %>
@@ -29,7 +29,7 @@
       <tbody>
         <% @colors.each do |color| %>
           <tr>
-            <% if current_user.admin? %>
+            <% if admin? %>
               <td><%= color.id %></td>
               <td><%= color.shop.name %></td>
             <% end %>

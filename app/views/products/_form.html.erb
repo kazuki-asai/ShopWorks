@@ -25,7 +25,7 @@
   </div>
 
   <div class="mb-3">
-    <% if current_user.admin? %>
+    <% if admin? %>
       <%= f.label :shop_id, "ショップ", class: "form-label" %>
       <%= f.collection_select :shop_id, Shop.order(:name), :id, :name, { prompt: "選択してください" }, { class: "form-select", required: true } %>
     <% else %>

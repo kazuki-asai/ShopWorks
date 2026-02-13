@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">工程一覧</h1>
+  <div class="d-flex gap-2">
+    <%= link_to new_process_step_path, class: "btn btn-primary" do %>
+      <i class="fa-solid fa-plus me-1"></i>新規登録
+    <% end %>
+    <%= link_to create_defaults_process_steps_path, data: { turbo_method: :post, turbo_confirm: "定番工程を作成しますか？" }, class: "btn btn-outline-primary" do %>
+      <i class="fa-solid fa-wand-magic-sparkles me-1"></i>定番工程の作成
+    <% end %>
+  </div>
+</div>
+
+<div class="d-flex flex-column" style="min-height: calc(100vh - 200px);">
+  <div class="table-responsive flex-grow-1">
+    <table class="table table-hover mb-0 h-100 table-striped">
+      <thead class="table-light">
+        <tr>
+          <% if admin? %>
+            <th>ID</th>
+            <th>ショップ</th>
+          <% end %>
+          <th>工程名</th>
+          <th>並び順</th>
+          <th>登録日</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @process_steps.each do |process_step| %>
+          <tr>
+            <% if admin? %>
+              <td><%= process_step.id %></td>
+              <td><%= process_step.shop.name %></td>
+            <% end %>
+            <td><%= process_step.name %></td>
+            <td><%= process_step.position %></td>
+            <td><%= l(process_step.created_at, format: :short) rescue process_step.created_at.strftime("%Y/%m/%d") %></td>
+            <td>
+              <%= link_to edit_process_step_path(process_step), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to process_step_path(process_step), data: { turbo_method: :delete, turbo_confirm: "「#{process_step.name}」を削除しますか？" }, class: "btn btn-sm btn-outline-danger" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

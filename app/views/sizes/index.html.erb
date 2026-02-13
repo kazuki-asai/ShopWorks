@@ -15,7 +15,7 @@
     <table class="table table-hover mb-0 h-100 table-striped">
       <thead class="table-light">
         <tr>
-          <% if current_user.admin? %>
+          <% if admin? %>
             <th>ID</th>
             <th>ショップ</th>
           <% end %>
@@ -28,7 +28,7 @@
       <tbody>
         <% @sizes.each do |size| %>
           <tr>
-            <% if current_user.admin? %>
+            <% if admin? %>
               <td><%= size.id %></td>
               <td><%= size.shop.name %></td>
             <% end %>
