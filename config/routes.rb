@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       post :create_defaults
     end
   end
+  resources :customers
 
   # Defines the root path route ("/")
   root "home#index"

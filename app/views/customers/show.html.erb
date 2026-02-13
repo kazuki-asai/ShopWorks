@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0"><%= @customer.name %></h1>
+  <div class="d-flex gap-2">
+    <%= link_to edit_customer_path(@customer), class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-pen-to-square me-1"></i>編集
+    <% end %>
+    <%= link_to customers_path, class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-arrow-left me-1"></i>一覧に戻る
+    <% end %>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <table class="table table-borderless mb-0">
+      <tbody>
+        <% if admin? %>
+          <tr>
+            <th class="text-muted" style="width: 200px;">ID</th>
+            <td><%= @customer.id %></td>
+          </tr>
+          <tr>
+            <th class="text-muted">ショップ</th>
+            <td><%= @customer.shop&.name %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th class="text-muted" style="width: 200px;">名前</th>
+          <td><%= @customer.name %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">フリガナ</th>
+          <td><%= [@customer.last_name_kana, @customer.first_name_kana].compact_blank.join(" ") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">メールアドレス</th>
+          <td><%= @customer.email %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">電話番号</th>
+          <td><%= @customer.phone %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">郵便番号</th>
+          <td><%= @customer.postal_code %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">住所</th>
+          <td><%= @customer.address %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">性別</th>
+          <td><%= label_gender(@customer.gender) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">生年月日</th>
+          <td><%= @customer.birthday&.strftime("%Y/%m/%d") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">登録日</th>
+          <td><%= @customer.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">更新日</th>
+          <td><%= @customer.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

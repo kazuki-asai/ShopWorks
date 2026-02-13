@@ -4,4 +4,5 @@ class Shop < ApplicationRecord
   has_many :sizes, dependent: :destroy
   has_many :colors, dependent: :destroy
   has_many :process_steps, dependent: :destroy
+  has_many :customers, dependent: :destroy
 end
