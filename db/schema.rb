@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_071316) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_080732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_071316) do
     t.bigint "shop_id"
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_colors_on_shop_id"
+  end
+
+  create_table "customer_purchase_histories", force: :cascade do |t|
+    t.integer "count", comment: "購入数量"
+    t.datetime "created_at", null: false
+    t.bigint "customer_id", comment: "購入した顧客"
+    t.integer "discount", comment: "割引額"
+    t.string "order_number", comment: "注文番号（同一注文のグルーピング用）"
+    t.bigint "product_id", comment: "紐付く商品（削除されても履歴は残す）"
+    t.string "product_name", comment: "購入時の商品名スナップショット"
+    t.datetime "purchased_at", comment: "実際の購入日時（決済完了日時）"
+    t.bigint "shop_id", comment: "購入が発生したショップ"
+    t.string "sku", comment: "購入時のSKU（販売単位識別子）"
+    t.integer "status", default: 0, null: false, comment: "購入状態（0:購入済 / 1:キャンセル / 2:返金）"
+    t.integer "subtotal_price", comment: "小計金額（unit_price × count）"
+    t.integer "tax", comment: "税額"
+    t.integer "unit_price", comment: "購入時単価（円）"
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_customer_purchase_histories_on_customer_id"
+    t.index ["product_id"], name: "index_customer_purchase_histories_on_product_id"
+    t.index ["shop_id"], name: "index_customer_purchase_histories_on_shop_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -151,6 +172,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_071316) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "colors", "shops"
+  add_foreign_key "customer_purchase_histories", "customers"
+  add_foreign_key "customer_purchase_histories", "products"
+  add_foreign_key "customer_purchase_histories", "shops"
   add_foreign_key "customers", "shops"
   add_foreign_key "process_steps", "shops"
   add_foreign_key "product_colors", "colors"
