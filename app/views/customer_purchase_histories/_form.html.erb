@@ -1,0 +1,48 @@
+<%= form_with(model: customer_purchase_history, class: "needs-validation") do |f| %>
+  <%= render "layouts/message", model: customer_purchase_history %>
+
+  <div class="mb-3">
+    <%= f.label :customer_id, "顧客", class: "form-label" %>
+    <%= f.collection_select :customer_id, Customer.active.by_current_shop, :id, :name, { include_blank: "選択してください" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :product_id, "商品", class: "form-label" %>
+    <%= f.collection_select :product_id, Product.by_current_shop, :id, :name, { include_blank: "選択してください" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :quantity, "数量", class: "form-label" %>
+      <%= f.number_field :quantity, class: "form-control", min: 1 %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :total_price, "合計金額", class: "form-label" %>
+      <%= f.number_field :total_price, class: "form-control", min: 0 %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :ordered_at, "注文日", class: "form-label" %>
+    <%= f.datetime_local_field :ordered_at, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :note, "備考", class: "form-label" %>
+    <%= f.text_area :note, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <% if admin? %>
+      <%= f.label :shop_id, "ショップ", class: "form-label" %>
+      <%= f.collection_select :shop_id, Shop.all, :id, :name, { include_blank: "選択してください" }, { class: "form-select" } %>
+    <% else %>
+      <%= f.hidden_field :shop_id, value: current_user.shop_id %>
+    <% end %>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit '保存', class: "btn btn-primary" %>
+    <%= link_to "キャンセル", customer_purchase_histories_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

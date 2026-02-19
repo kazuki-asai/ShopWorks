@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">購入履歴詳細</h1>
+  <div class="d-flex gap-2">
+    <% if policy(:customer_purchase_histories_controller).edit? %>
+      <%= link_to edit_customer_purchase_history_path(@customer_purchase_history), class: "btn btn-outline-secondary" do %>
+        <i class="fa-solid fa-pen-to-square me-1"></i>編集
+      <% end %>
+    <% end %>
+    <%= link_to customer_purchase_histories_path, class: "btn btn-outline-secondary" do %>
+      <i class="fa-solid fa-arrow-left me-1"></i>一覧に戻る
+    <% end %>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <table class="table table-borderless mb-0">
+      <tbody>
+        <% if admin? %>
+          <tr>
+            <th class="text-muted" style="width: 200px;">ID</th>
+            <td><%= @customer_purchase_history.id %></td>
+          </tr>
+          <tr>
+            <th class="text-muted">ショップ</th>
+            <td><%= @customer_purchase_history.shop&.name %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th class="text-muted" style="width: 200px;">顧客名</th>
+          <td><%= link_to @customer_purchase_history.customer.name, customer_path(@customer_purchase_history.customer) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">商品名</th>
+          <td><%= link_to @customer_purchase_history.product.name, product_path(@customer_purchase_history.product) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">数量</th>
+          <td><%= @customer_purchase_history.quantity %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">合計金額</th>
+          <td><%= number_to_currency(@customer_purchase_history.total_price, unit: "¥", format: "%u%n") if @customer_purchase_history.total_price %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">注文日</th>
+          <td><%= @customer_purchase_history.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">備考</th>
+          <td><%= simple_format(@customer_purchase_history.note) %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">登録日</th>
+          <td><%= @customer_purchase_history.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+        <tr>
+          <th class="text-muted">更新日</th>
+          <td><%= @customer_purchase_history.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
