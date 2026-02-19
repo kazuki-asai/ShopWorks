@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_082423) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_19_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -87,17 +87,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_082423) do
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "customer_id", null: false
-    t.text "note"
-    t.datetime "ordered_at"
-    t.bigint "product_id", null: false
-    t.integer "quantity"
-    t.bigint "shop_id", null: false
-    t.integer "total_price"
+    t.string "customer_email"
+    t.bigint "customer_purchase_history_id", null: false
+    t.integer "payment_status", default: 0, null: false
+    t.string "stripe_checkout_session_id"
+    t.string "stripe_payment_intent_id"
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
-    t.index ["product_id"], name: "index_orders_on_product_id"
-    t.index ["shop_id"], name: "index_orders_on_shop_id"
+    t.index ["customer_purchase_history_id"], name: "index_orders_on_customer_purchase_history_id"
+    t.index ["payment_status"], name: "index_orders_on_payment_status"
+    t.index ["stripe_checkout_session_id"], name: "index_orders_on_stripe_checkout_session_id", unique: true
   end
 
   create_table "process_steps", force: :cascade do |t|
@@ -185,9 +183,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_082423) do
   add_foreign_key "customer_purchase_histories", "products"
   add_foreign_key "customer_purchase_histories", "shops"
   add_foreign_key "customers", "shops"
-  add_foreign_key "orders", "customers"
-  add_foreign_key "orders", "products"
-  add_foreign_key "orders", "shops"
+  add_foreign_key "orders", "customer_purchase_histories"
   add_foreign_key "process_steps", "shops"
   add_foreign_key "product_colors", "colors"
   add_foreign_key "product_colors", "products"

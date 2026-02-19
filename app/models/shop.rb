@@ -5,4 +5,5 @@ class Shop < ApplicationRecord
   has_many :colors, dependent: :destroy
   has_many :process_steps, dependent: :destroy
   has_many :customers, dependent: :destroy
+  has_many :customer_purchase_histories, dependent: :destroy
 end
