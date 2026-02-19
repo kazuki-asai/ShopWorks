@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">購入履歴一覧</h1>
+  <% if policy(:customer_purchase_histories_controller).new? %>
+    <%= link_to new_customer_purchase_history_path, class: "btn btn-primary" do %>
+      <i class="fa-solid fa-plus me-1"></i>新規登録
+    <% end %>
+  <% end %>
+</div>
+
+<div class="d-flex flex-column" style="min-height: calc(100vh - 200px);">
+  <div class="table-responsive flex-grow-1">
+    <table class="table table-hover mb-0 h-100 table-striped">
+      <thead class="table-light">
+        <tr>
+          <% if admin? %>
+            <th>ID</th>
+            <th>ショップ</th>
+          <% end %>
+          <th>顧客名</th>
+          <th>商品名</th>
+          <th>数量</th>
+          <th>合計金額</th>
+          <th>注文日</th>
+          <th>備考</th>
+          <% if policy(:customer_purchase_histories_controller).edit? || policy(:customer_purchase_histories_controller).destroy? %>
+            <th>操作</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @customer_purchase_histories.each do |history| %>
+          <tr>
+            <% if admin? %>
+              <td><%= history.id %></td>
+              <td><%= history.shop&.name %></td>
+            <% end %>
+            <td><%= link_to history.customer.name, customer_path(history.customer) %></td>
+            <td><%= link_to history.product.name, product_path(history.product) %></td>
+            <td><%= history.quantity %></td>
+            <td><%= number_to_currency(history.total_price, unit: "¥", format: "%u%n") if history.total_price %></td>
+            <td><%= history.ordered_at&.strftime("%Y/%m/%d") %></td>
+            <td><%= truncate(history.note, length: 20) %></td>
+            <% if policy(:customer_purchase_histories_controller).edit? || policy(:customer_purchase_histories_controller).destroy? %>
+              <td>
+                <% if policy(:customer_purchase_histories_controller).edit? %>
+                  <%= link_to edit_customer_purchase_history_path(history), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  <% end %>
+                <% end %>
+                <% if policy(:customer_purchase_histories_controller).destroy? %>
+                  <%= link_to customer_purchase_history_path(history), data: { turbo_method: :delete, turbo_confirm: "この購入履歴を削除しますか？" }, class: "btn btn-sm btn-outline-danger" do %>
+                    <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_080732) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_082423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,20 +53,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_080732) do
   end
 
   create_table "customer_purchase_histories", force: :cascade do |t|
-    t.integer "count", comment: "購入数量"
     t.datetime "created_at", null: false
-    t.bigint "customer_id", comment: "購入した顧客"
-    t.integer "discount", comment: "割引額"
-    t.string "order_number", comment: "注文番号（同一注文のグルーピング用）"
-    t.bigint "product_id", comment: "紐付く商品（削除されても履歴は残す）"
-    t.string "product_name", comment: "購入時の商品名スナップショット"
-    t.datetime "purchased_at", comment: "実際の購入日時（決済完了日時）"
-    t.bigint "shop_id", comment: "購入が発生したショップ"
-    t.string "sku", comment: "購入時のSKU（販売単位識別子）"
-    t.integer "status", default: 0, null: false, comment: "購入状態（0:購入済 / 1:キャンセル / 2:返金）"
-    t.integer "subtotal_price", comment: "小計金額（unit_price × count）"
-    t.integer "tax", comment: "税額"
-    t.integer "unit_price", comment: "購入時単価（円）"
+    t.bigint "customer_id", null: false
+    t.text "note"
+    t.datetime "ordered_at"
+    t.bigint "product_id", null: false
+    t.integer "quantity"
+    t.bigint "shop_id"
+    t.integer "total_price"
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_customer_purchase_histories_on_customer_id"
     t.index ["product_id"], name: "index_customer_purchase_histories_on_product_id"
@@ -89,6 +83,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_080732) do
     t.bigint "shop_id"
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_customers_on_shop_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "customer_id", null: false
+    t.text "note"
+    t.datetime "ordered_at"
+    t.bigint "product_id", null: false
+    t.integer "quantity"
+    t.bigint "shop_id", null: false
+    t.integer "total_price"
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["shop_id"], name: "index_orders_on_shop_id"
   end
 
   create_table "process_steps", force: :cascade do |t|
@@ -176,6 +185,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_080732) do
   add_foreign_key "customer_purchase_histories", "products"
   add_foreign_key "customer_purchase_histories", "shops"
   add_foreign_key "customers", "shops"
+  add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "shops"
   add_foreign_key "process_steps", "shops"
   add_foreign_key "product_colors", "colors"
   add_foreign_key "product_colors", "products"
