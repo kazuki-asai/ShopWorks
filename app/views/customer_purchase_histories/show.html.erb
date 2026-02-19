@@ -62,3 +62,44 @@
     </table>
   </div>
 </div>
+
+<% if @customer_purchase_history.order.present? %>
+  <div class="card shadow-sm mt-4">
+    <div class="card-header">
+      <h5 class="mb-0">決済情報</h5>
+    </div>
+    <div class="card-body">
+      <table class="table table-borderless mb-0">
+        <tbody>
+          <tr>
+            <th class="text-muted" style="width: 200px;">決済ステータス</th>
+            <td>
+              <% case @customer_purchase_history.order.payment_status %>
+              <% when "paid" %>
+                <span class="badge bg-success">支払済</span>
+              <% when "pending" %>
+                <span class="badge bg-warning text-dark">処理中</span>
+              <% when "failed" %>
+                <span class="badge bg-danger">失敗</span>
+              <% when "refunded" %>
+                <span class="badge bg-secondary">返金済</span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-muted">メールアドレス</th>
+            <td><%= @customer_purchase_history.order.customer_email %></td>
+          </tr>
+          <tr>
+            <th class="text-muted">Stripe Session ID</th>
+            <td><code><%= @customer_purchase_history.order.stripe_checkout_session_id %></code></td>
+          </tr>
+          <tr>
+            <th class="text-muted">Stripe Payment Intent ID</th>
+            <td><code><%= @customer_purchase_history.order.stripe_payment_intent_id %></code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

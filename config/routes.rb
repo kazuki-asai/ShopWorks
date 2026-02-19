@@ -33,6 +33,17 @@ Rails.application.routes.draw do
   resources :customer_purchase_histories
   resources :customers
 
+  # API（EC サイト向け）
+  namespace :api do
+    resources :products, only: [ :index, :show ]
+    resources :checkouts, only: [ :create ]
+  end
+
+  # Stripe Webhook
+  namespace :webhooks do
+    post "stripe", to: "stripe#create"
+  end
+
   # Defines the root path route ("/")
   root "home#index"
 end
