@@ -1,9 +1,9 @@
 class Api::ProductsController < Api::BaseController
   def index
     products = if @shop
-      @shop.products
+      @shop.products.includes(thumbnails: { image_attachment: :blob })
     else
-      Product.all
+      Product.includes(thumbnails: { image_attachment: :blob }).all
     end
 
     render json: products.map { |p| product_json(p) }
@@ -23,7 +23,10 @@ class Api::ProductsController < Api::BaseController
       description: product.description,
       detail: product.detail,
       price: product.price,
-      shop_id: product.shop_id
+      shop_id: product.shop_id,
+      images: product.thumbnails.map { |t|
+        t.image.attached? ? rails_blob_url(t.image, only_path: false) : nil
+      }.compact
     }
   end
 end
