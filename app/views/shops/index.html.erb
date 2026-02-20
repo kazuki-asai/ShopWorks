@@ -12,6 +12,7 @@
         <tr>
           <th>ID</th>
           <th>ショップ名</th>
+          <th>ショップコード</th>
           <th>ドメイン</th>
           <th>登録日</th>
           <th>操作</th>
@@ -22,6 +23,7 @@
           <tr>
             <td><%= shop.id %></td>
             <td><%= link_to shop.name, shop_path(shop) %></td>
+            <td><%= shop.code %></td>
             <td><%= shop.domain %></td>
             <td><%= l(shop.created_at, format: :short) rescue shop.created_at.strftime("%Y/%m/%d") %></td>
             <td>

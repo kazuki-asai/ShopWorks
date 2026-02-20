@@ -4,6 +4,6 @@ class Api::BaseController < ActionController::API
   private
 
   def set_shop
-    @shop = Shop.find(params[:shop_id]) if params[:shop_id].present?
+    @shop = Shop.find_by!(code: params[:shop_code]) if params[:shop_code].present?
   end
 end

@@ -23,6 +23,15 @@
           <td><%= @shop.name %></td>
         </tr>
         <tr>
+          <th class="text-muted">ショップコード</th>
+          <td>
+            <code id="shop-code"><%= @shop.code %></code>
+            <button class="btn btn-sm btn-outline-secondary ms-2" onclick="navigator.clipboard.writeText(document.getElementById('shop-code').textContent).then(() => { this.innerHTML = '<i class=\'fa-solid fa-check\'></i>'; setTimeout(() => { this.innerHTML = '<i class=\'fa-solid fa-copy\'></i>'; }, 2000) })">
+              <i class="fa-solid fa-copy"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
           <th class="text-muted">ドメイン</th>
           <td><%= @shop.domain %></td>
         </tr>
